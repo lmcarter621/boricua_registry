@@ -24,15 +24,14 @@ describe TextParser do
         let(:message) { "🦑 not matching anything"}
         it 'should return {}' do
           result = TextParser.parse_message(message)
-          expect(result).to be_a(Hash)
-          expect(result).to be_empty
+          expect(result).to eq({})
         end
       end
     end
   end
 
   context 'private methods' do
-    describe '.parse_found' do
+    describe '.parse_report' do
       let(:date_string) {"01/01/1998"}
       context 'with valid text' do
         context 'with everything' do
@@ -96,25 +95,117 @@ describe TextParser do
             expect(result[:location]).to be_blank
           end
         end
-        context 'with no birthday' do
-          let(:text_message) {"report billy bob joe in city name, place status pretty good 👍"}
-          it "location should be_blank" do
-            result = TextParser.parse_report(text_message)
-            expect(result[:birthday]).to be_blank
-          end
-        end
-        context 'with no status' do
-          let(:text_message) {"report billy bob joe in city name, place born #{date_string}"}
-          it "location should be_blank" do
-            result = TextParser.parse_report(text_message)
-            expect(result[:status]).to be_blank
-          end
-        end
-
       end
     end
     describe '.parse_find' do
-      pending 'Not Implemented Yet...'
+      context 'by build_search_params_for_contact' do
+        let(:message) { "find contact 123-456-7890"}
+        it 'should call :build_search_params_for_contact' do
+          allow(TextParser).to receive(:build_search_params_for_contact).and_return(true)
+          expect(TextParser).to receive(:build_search_params_for_contact).once
+          TextParser.parse_find(message)
+        end
+      end
+      context 'by build_search_parameters' do
+        let(:message) { "find not-contact and data and things"}
+        it 'should call :build_search_parameters' do
+          allow(TextParser).to receive(:build_search_parameters).and_return(true)
+          expect(TextParser).to receive(:build_search_parameters).once
+          TextParser.parse_find(message)
+        end        
+      end
+    end
+    describe '.build_search_params_for_contact' do
+      let(:text_message) {"find contact #{contact_string}"}
+      context 'with valid message' do
+        let(:contact_string) {'123-456-7890'}
+        it 'should return contact number without formatting' do
+          result = TextParser.build_search_params_for_contact(text_message)
+          expect(result).to eq({message_type: :find, contact: contact_string.tr('-','')})
+        end
+      end
+      context 'with missing contact' do
+        let(:contact_string) {''}
+        it 'should return {}' do
+          result = TextParser.build_search_params_for_contact(text_message)
+          expect(result).to eq({})
+        end
+      end
+      context 'with non-numeric contact' do
+        let(:contact_string) {'aunt jane'}
+        it 'should return {}' do
+          result = TextParser.build_search_params_for_contact(text_message)
+          expect(result).to eq({})
+        end
+      end
+    end
+    describe '.build_search_parameters' do
+      let(:date_string) {"01/01/1998"}
+      let(:contact_string) {"123-456-7890"}
+
+      context 'with valid text' do
+        context 'with everything' do
+          let(:text_message) {"find billy bob joe in city name, place born #{date_string} contact #{contact_string}"}
+          it "should return expected hash" do
+            result = TextParser.send(:build_search_parameters, text_message)
+            expect(result[:first_name]).to eq("billy")
+            expect(result[:last_name]).to eq("bob joe")
+            expect(result[:location]).to eq("city name, place")
+            expect(result[:birthday]).to eq(Date.parse(date_string))
+            expect(result[:contact]).to eq(contact_string.tr('-',''))
+          end
+        end
+        context 'without birthday' do
+          let(:text_message) {"find billy bob joe in city name, place contact #{contact_string}"}
+          it "should return expected hash" do
+            result = TextParser.send(:build_search_parameters, text_message)
+            expect(result[:first_name]).to eq("billy")
+            expect(result[:last_name]).to eq("bob joe")
+            expect(result[:location]).to eq("city name, place")
+            expect(result[:birthday]).to be_blank
+            expect(result[:contact]).to eq(contact_string.tr('-',''))
+          end
+        end
+        context 'without contact' do
+          let(:text_message) {"find billy bob joe in city name, place born #{date_string}"}
+          it "should return expected hash" do
+            result = TextParser.send(:build_search_parameters, text_message)
+            expect(result[:first_name]).to eq("billy")
+            expect(result[:last_name]).to eq("bob joe")
+            expect(result[:location]).to eq("city name, place")
+            expect(result[:birthday]).to eq(Date.parse(date_string))
+            expect(result[:contact]).to be_blank
+          end
+        end
+        context 'without birthday or contact' do
+          let(:text_message) {"find billy bob joe in city name, place"}
+          it "should return expected hash" do
+            result = TextParser.send(:build_search_parameters, text_message)
+            expect(result[:first_name]).to eq("billy")
+            expect(result[:last_name]).to eq("bob joe")
+            expect(result[:location]).to eq("city name, place")
+            expect(result[:birthday]).to be_blank
+            expect(result[:contact]).to be_blank
+          end
+        end
+        context 'with invalid data' do
+          context 'with blank name' do
+            let(:text_message) {"find in city name, place born #{date_string}"}
+            it "returns an empty hash" do
+              result = TextParser.send(:build_search_parameters, text_message)
+              expect(result).to eq({})
+            end
+          end
+          context 'with no location' do
+            let(:text_message) {"find billy bob joe born #{date_string}"}
+            it "location should be_blank" do
+              result = TextParser.send(:build_search_parameters, text_message)
+              expect(result).to eq({})
+            end
+          end
+
+        end
+      end
     end
     describe '.split_name' do
       context 'with one name' do

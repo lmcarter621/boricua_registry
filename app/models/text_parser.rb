@@ -1,6 +1,7 @@
 class TextParser
   
-  # parse text message and return hash of found values
+  # parse text message and return hash
+  # that maps to found person attributes
   def self.parse_message(text_message)
     if text_message =~/report/i
       parse_report(text_message)
@@ -13,7 +14,8 @@ class TextParser
   end
 
   private
-
+  
+  # return hash from format like:
   #  found X in X born X (status X) (contact X)  
   def self.parse_report(text_message)
     response = {message_type: :report}
@@ -30,7 +32,7 @@ class TextParser
       # see if status follows location
       location, status = text_message&.scan(/(.*) status (.*)/i)&.flatten
     end
-    # none of it so location is just the rest of the message
+    # if not set yet, location is just the rest of the message
     location = text_message unless location.present?
         
     return {} if names.blank? || location.blank?
@@ -45,11 +47,59 @@ class TextParser
     response
   end
   
+  #  return hash from:
   #  find X in X (born X) (contact X)
   #  find contact X
   def self.parse_find(text_message)
+    if text_message =~/find contact/i
+      build_search_params_for_contact(text_message)
+    else
+      build_search_parameters(text_message)
+    end
+  end
+  
+  # return hash with contact from:
+  # find contact (.*)
+  def self.build_search_params_for_contact(text_message)
+    text_message =~/find contact (.*)/i
+    contact = $1&.gsub(/\D/,'')
+    if contact.present?
+      response = {message_type: :find, contact: contact}
+    else
+      # on error, just return empty
+      {}
+    end
+  end
+
+  # return a hash of attributes to use as a search against found people
+  # in format: find X in X (born X) (contact X)
+  def self.build_search_parameters(text_message)
     response = {message_type: :find}
-    # TODO: All this
+
+    names, text_message = text_message&.scan(/find (.*) in (.*)/i)&.flatten
+    # see if born follows location
+    location, remaining_message = text_message&.scan(/(.*) (born .*)/i)&.flatten
+    if location.present?
+      # see if contact follow born
+      birthday_string, contact = remaining_message&.scan(/(.*) contact (.*)/i).flatten
+      birthday_string = remaining_message.scan(/born (.*)/i)&.flatten&.first unless birthday_string
+    else
+      # see if contact follows location
+      location, contact = text_message&.scan(/(.*) contact (.*)/i)&.flatten
+    end
+    # if not set yet, location is just the rest of the message
+    location = text_message unless location.present?
+    return {} if names.blank? || location.blank?
+    response.merge!(split_name(names)) if names.present?
+
+    response[:location] = location if location.present?
+    if contact.present?
+      response[:contact] = contact.gsub(/\D/,'')
+    end
+
+    birthday = parse_birthday(birthday_string)
+    response[:birthday] = birthday if birthday.present?
+    response
   end
   
   # Split Fullname string to a hash w/ first_name and last_name
