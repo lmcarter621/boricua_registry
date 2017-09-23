@@ -1,0 +1,23 @@
+<h1>Listing People</h1>
+ 
+<table>
+  <tr>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>Location</th>
+    <th>Birthday</th>
+    <th>Status</th>
+  </tr>
+ 
+<% @people.each do |person| %>
+  <tr>
+    <td><%= person.first_name %></td>
+    <td><%= person.last_name %></td>
+    <td><%= person.location %></td>
+    <td><%= person.birthday %></td>
+    <td><%= person.status %></td>
+  </tr>
+<% end %>
+</table>
+ 
+<br>
