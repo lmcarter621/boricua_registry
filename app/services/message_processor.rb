@@ -41,7 +41,7 @@ class MessageProcessor
   end
 
   def search_person
-    person = FoundPerson.where(message_parts)
+    person = FoundPerson.where(message_parts.except!(:message_type))
 
     if person.present?
       "#{person.first_name} #{person.last_name} en #{person.location} ha sido encontrado."
