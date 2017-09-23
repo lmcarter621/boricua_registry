@@ -26,13 +26,14 @@
   </tr>
  
 <% @people.each do |person| %>
-  <tr>
+  <tr class="<%= @current_class %>">
     <td><%= person.first_name %></td>
     <td><%= person.last_name %></td>
     <td><%= person.location %></td>
     <td><%= person.birthday %></td>
     <td><%= person.status %></td>
   </tr>
+  <% @current_class = @current_class.blank? ? 'alt-row' : '' %>
 <% end %>
 </table>
  
