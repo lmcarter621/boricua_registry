@@ -7,8 +7,10 @@ class RegistryController < ApplicationController
   end
 
   def twilio_webhook
-    message = twilio_client.messages.create(
-      body: "Dios te bendiga",
+    message = MessageProcessor.process_message(message: params[:Body], sender: params[:From])
+
+    twilio_client.messages.create(
+      body: message,
       to: params[:From],
       from: params[:To],
     )
