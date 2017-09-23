@@ -21,7 +21,6 @@ ActiveRecord::Schema.define(version: 20170923172626) do
     t.date "birthday"
     t.string "location"
     t.string "status"
-    t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "reported_by_number"
