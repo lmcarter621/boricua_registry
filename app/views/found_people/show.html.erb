@@ -1,4 +1,20 @@
 <h1>Listing People</h1>
+
+<%= form_tag("/found_people", method: "get") do %>
+  <%= label_tag(:first_name, "First Name:") %>
+  <%= text_field_tag(:first_name, @old_search_params[:first_name]) %>
+
+  <%= label_tag(:last_name, "Last Name:") %>
+  <%= text_field_tag(:last_name, @old_search_params[:last_name]) %>
+
+  <%= label_tag(:location, "Location:") %>
+  <%= text_field_tag(:location, @old_search_params[:location]) %>
+
+  <%= label_tag(:birthday, "Birthday:") %>
+  <%= date_field_tag(:birthday, @old_search_params[:birthday]) %>
+
+  <%= submit_tag("Search") %>
+<% end %>
  
 <table>
   <tr>
