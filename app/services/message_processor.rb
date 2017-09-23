@@ -41,7 +41,8 @@ class MessageProcessor
   end
 
   def search_person
-    person = FoundPerson.where(message_parts.except!(:message_type))
+    #TODO  use where in place of findby to indicate the search must be narrowed
+    person = FoundPerson.where(message_parts.except!(:message_type)).first
 
     if person.present?
       "#{person.first_name} #{person.last_name} en #{person.location} ha sido encontrado."
