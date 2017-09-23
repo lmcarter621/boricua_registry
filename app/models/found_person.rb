@@ -5,6 +5,6 @@ class FoundPerson < ActiveRecord::Base
   validates :phone_number, :numericality => true, :length => { :minimum => 7, :maximum => 10 }
 
   def clean_phone_number
-    phone_number.gsub!(/[^\d]/, '')
+    phone_number&.gsub!(/[^\D]/, '')
   end
 end
