@@ -21,10 +21,10 @@ class RegistryController < ApplicationController
   end
 
   def account_sid
-    @account_sid ||= Rails.application.secrets.twilio_account_sid
+    @account_sid ||= Rails.application.secrets.twilio_account_sid || ENV["TWILIO_ACCOUNT_SID"]
   end
 
   def auth_token
-    @auth_token ||= Rails.application.secrets.twilio_auth_token
+    @auth_token ||= Rails.application.secrets.twilio_auth_token || ENV["TWILIO_AUTH_TOKEN"]
   end
 end
