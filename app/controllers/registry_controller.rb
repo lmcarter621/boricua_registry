@@ -7,6 +7,8 @@ class RegistryController < ApplicationController
   end
 
   def twilio_webhook
+    expires_now()
+
     message = MessageProcessor.process_message(message: params[:Body], sender: params[:From])
 
     twilio_client.messages.create(
