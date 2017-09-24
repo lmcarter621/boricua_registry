@@ -4,6 +4,7 @@ class TextParser
   # parse text message and return hash
   # that maps to found person attributes
   def self.parse_message(text_message)
+    text_message = text_message.strip.gsub(/\.$/,'')
     if text_message =~/#{report(:en)}/i
       parse_report(text_message, :en)
     elsif text_message =~/#{find(:en)}/i
