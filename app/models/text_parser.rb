@@ -43,7 +43,7 @@ class TextParser
     return {} if names.blank? || location.blank?
     response.merge!(split_name(names)) if names.present?
 
-    response[:location] = location if location.present?
+    response[:location] = location.titlecase if location.present?
     response[:status] = status if status.present?
 
     birthday = parse_birthday(birthday_string)
@@ -97,7 +97,7 @@ class TextParser
     return {} if names.blank? || location.blank?
     response.merge!(split_name(names)) if names.present?
 
-    response[:location] = location if location.present?
+    response[:location] = location.titlecase if location.present?
     if contact.present?
       response[:contact] = contact.gsub(/\D/,'')
     end
@@ -122,13 +122,13 @@ class TextParser
     middle = (names.count / 2)
     if (names.count % 2) == 0
       # even #, split down the middle
-      response[:first_name] = names[0..(middle - 1)].join(" ")
-      response[:last_name] = names[middle..-1].join(" ")
+      response[:first_name] = names[0..(middle - 1)].join(" ").titlecase
+      response[:last_name] = names[middle..-1].join(" ").titlecase
     else
       # odd # and > 1, put the extra name on the last name
       first_name_ending = middle -1
-      response[:first_name] = names[0..first_name_ending].join(" ")
-      response[:last_name] = names[middle..-1].join(" ")
+      response[:first_name] = names[0..first_name_ending].join(" ").titlecase
+      response[:last_name] = names[middle..-1].join(" ").titlecase
     end
     response
   end

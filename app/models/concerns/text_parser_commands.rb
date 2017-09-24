@@ -5,7 +5,7 @@ module TextParserCommands
     when :en
       'find'
     when :es
-      'busco'
+      'descubrir'
     end
   end
 
@@ -14,7 +14,7 @@ module TextParserCommands
     when :en
       'report'
     when :es
-      'descubrir'
+      'busco'
     end
   end
   

@@ -35,45 +35,45 @@ describe TextParser do
       let(:date_string) {"01/01/1998"}
       context 'with valid text' do
         context 'with everything' do
-          let(:text_message) {"report billy bob joe in city name, place born #{date_string} status pretty good 👍"}
+          let(:text_message) {"report Billy Bob Joe in City Name, Place born #{date_string} status Pretty Good 👍"}
           it "should return expected hash" do
             result = TextParser.parse_report(text_message, :en)
-            expect(result[:first_name]).to eq("billy")
-            expect(result[:last_name]).to eq("bob joe")
-            expect(result[:location]).to eq("city name, place")
+            expect(result[:first_name]).to eq("Billy")
+            expect(result[:last_name]).to eq("Bob Joe")
+            expect(result[:location]).to eq("City Name, Place")
             expect(result[:birthday]).to eq(Date.parse(date_string))
-            expect(result[:status]).to eq("pretty good 👍")
+            expect(result[:status]).to eq("Pretty Good 👍")
           end
         end
         context 'without a birthday' do
-          let(:text_message) {"report billy bob joe in city name, place status pretty good 👍"}
+          let(:text_message) {"report Billy Bob Joe in City Name, Place status Pretty Good 👍"}
           it "should return expected hash" do
             result = TextParser.parse_report(text_message, :en)
-            expect(result[:first_name]).to eq("billy")
-            expect(result[:last_name]).to eq("bob joe")
-            expect(result[:location]).to eq("city name, place")
+            expect(result[:first_name]).to eq("Billy")
+            expect(result[:last_name]).to eq("Bob Joe")
+            expect(result[:location]).to eq("City Name, Place")
             expect(result[:birthday]).to be_blank
-            expect(result[:status]).to eq("pretty good 👍")
+            expect(result[:status]).to eq("Pretty Good 👍")
           end
         end
         context 'without a status' do
-          let(:text_message) {"report billy bob joe in city name, place born #{date_string}"}
+          let(:text_message) {"report Billy Bob Joe in City Name, Place born #{date_string}"}
           it "should return expected hash" do
             result = TextParser.parse_report(text_message, :en)
-            expect(result[:first_name]).to eq("billy")
-            expect(result[:last_name]).to eq("bob joe")
-            expect(result[:location]).to eq("city name, place")
+            expect(result[:first_name]).to eq("Billy")
+            expect(result[:last_name]).to eq("Bob Joe")
+            expect(result[:location]).to eq("City Name, Place")
             expect(result[:birthday]).to eq(Date.parse(date_string))
             expect(result[:status]).to be_blank
           end
         end
         context 'without birthday or status' do
-          let(:text_message) {"report billy bob joe in city name, place"}
+          let(:text_message) {"report Billy Bob Joe in City Name, Place"}
           it "should return expected hash" do
             result = TextParser.parse_report(text_message, :en)
-            expect(result[:first_name]).to eq("billy")
-            expect(result[:last_name]).to eq("bob joe")
-            expect(result[:location]).to eq("city name, place")
+            expect(result[:first_name]).to eq("Billy")
+            expect(result[:last_name]).to eq("Bob Joe")
+            expect(result[:location]).to eq("City Name, Place")
             expect(result[:birthday]).to be_blank
             expect(result[:status]).to be_blank
           end
@@ -81,7 +81,7 @@ describe TextParser do
       end
       context 'with invalid text' do
         context 'with blank name' do
-          let(:text_message) {"report in city name, place born #{date_string} status pretty good 👍"}
+          let(:text_message) {"report in City Name, Place born #{date_string} status Pretty Good 👍"}
           it "first_name and last_name should be_blank" do
             result = TextParser.parse_report(text_message, :en)
             expect(result[:first_name]).to be_blank
@@ -89,7 +89,7 @@ describe TextParser do
           end
         end
         context 'with no location' do
-          let(:text_message) {"report billy bob joe born #{date_string} status pretty good 👍"}
+          let(:text_message) {"report Billy Bob Joe born #{date_string} status Pretty Good 👍"}
           it "location should be_blank" do
             result = TextParser.parse_report(text_message, :en)
             expect(result[:location]).to be_blank
@@ -145,59 +145,59 @@ describe TextParser do
 
       context 'with valid text' do
         context 'with everything' do
-          let(:text_message) {"find billy bob joe in city name, place born #{date_string} contact #{contact_string}"}
+          let(:text_message) {"find Billy Bob Joe in City Name, Place born #{date_string} contact #{contact_string}"}
           it "should return expected hash" do
             result = TextParser.send(:build_search_parameters, text_message, :en)
-            expect(result[:first_name]).to eq("billy")
-            expect(result[:last_name]).to eq("bob joe")
-            expect(result[:location]).to eq("city name, place")
+            expect(result[:first_name]).to eq("Billy")
+            expect(result[:last_name]).to eq("Bob Joe")
+            expect(result[:location]).to eq("City Name, Place")
             expect(result[:birthday]).to eq(Date.parse(date_string))
             expect(result[:contact]).to eq(contact_string.tr('-',''))
           end
         end
         context 'without birthday' do
-          let(:text_message) {"find billy bob joe in city name, place contact #{contact_string}"}
+          let(:text_message) {"find Billy Bob Joe in City Name, Place contact #{contact_string}"}
           it "should return expected hash" do
             result = TextParser.send(:build_search_parameters, text_message, :en)
-            expect(result[:first_name]).to eq("billy")
-            expect(result[:last_name]).to eq("bob joe")
-            expect(result[:location]).to eq("city name, place")
+            expect(result[:first_name]).to eq("Billy")
+            expect(result[:last_name]).to eq("Bob Joe")
+            expect(result[:location]).to eq("City Name, Place")
             expect(result[:birthday]).to be_blank
             expect(result[:contact]).to eq(contact_string.tr('-',''))
           end
         end
         context 'without contact' do
-          let(:text_message) {"find billy bob joe in city name, place born #{date_string}"}
+          let(:text_message) {"find Billy Bob Joe in City Name, Place born #{date_string}"}
           it "should return expected hash" do
             result = TextParser.send(:build_search_parameters, text_message, :en)
-            expect(result[:first_name]).to eq("billy")
-            expect(result[:last_name]).to eq("bob joe")
-            expect(result[:location]).to eq("city name, place")
+            expect(result[:first_name]).to eq("Billy")
+            expect(result[:last_name]).to eq("Bob Joe")
+            expect(result[:location]).to eq("City Name, Place")
             expect(result[:birthday]).to eq(Date.parse(date_string))
             expect(result[:contact]).to be_blank
           end
         end
         context 'without birthday or contact' do
-          let(:text_message) {"find billy bob joe in city name, place"}
+          let(:text_message) {"find Billy Bob Joe in City Name, Place"}
           it "should return expected hash" do
             result = TextParser.send(:build_search_parameters, text_message, :en)
-            expect(result[:first_name]).to eq("billy")
-            expect(result[:last_name]).to eq("bob joe")
-            expect(result[:location]).to eq("city name, place")
+            expect(result[:first_name]).to eq("Billy")
+            expect(result[:last_name]).to eq("Bob Joe")
+            expect(result[:location]).to eq("City Name, Place")
             expect(result[:birthday]).to be_blank
             expect(result[:contact]).to be_blank
           end
         end
         context 'with invalid data' do
           context 'with blank name' do
-            let(:text_message) {"find in city name, place born #{date_string}"}
+            let(:text_message) {"find in City Name, Place born #{date_string}"}
             it "returns an empty hash" do
               result = TextParser.send(:build_search_parameters, text_message, :en)
               expect(result).to eq({})
             end
           end
           context 'with no location' do
-            let(:text_message) {"find billy bob joe born #{date_string}"}
+            let(:text_message) {"find Billy Bob Joe born #{date_string}"}
             it "location should be_blank" do
               result = TextParser.send(:build_search_parameters, text_message, :en)
               expect(result).to eq({})
@@ -209,22 +209,22 @@ describe TextParser do
     end
     describe '.split_name' do
       context 'with one name' do
-        let(:name_string) {"billy"}
+        let(:name_string) {"Billy"}
         it "returns empty hash" do
           expect(TextParser.split_name(name_string)).to be_empty
         end
       end
       context 'with even # names' do
-        let(:name_string) {"billy bob joe bob"}
+        let(:name_string) {"Billy Bob Joe Bob"}
         it "splits equally between first and last names" do
-          expected_hash = {:first_name => "billy bob", :last_name => "joe bob"}
+          expected_hash = {:first_name => "Billy Bob", :last_name => "Joe Bob"}
           expect(TextParser.split_name(name_string)).to eq(expected_hash)
         end
       end
       context 'with odd # names' do
-        let(:name_string) {"billy bob joe bob joe"}
+        let(:name_string) {"Billy Bob Joe Bob Joe"}
         it "adds extra name to last name" do
-          expected_hash = {:first_name => "billy bob", :last_name => "joe bob joe"}
+          expected_hash = {:first_name => "Billy Bob", :last_name => "Joe Bob Joe"}
           expect(TextParser.split_name(name_string)).to eq(expected_hash)
         end
       end
