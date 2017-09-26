@@ -23,15 +23,17 @@
     <th>Location</th>
     <th>Birthday</th>
   </tr>
- 
-<% @people.each do |person| %>
-  <tr class="<%= @current_class %>">
-    <td><%= person.first_name %></td>
-    <td><%= person.last_name %></td>
-    <td><%= person.location %></td>
-    <td><%= person.birthday %></td>
-  </tr>
-  <% @current_class = @current_class.blank? ? 'alt-row' : '' %>
+
+<% if @people.present? %>
+  <% @people.each do |person| %>
+    <tr class="<%= @current_class %>">
+      <td><%= person.first_name %></td>
+      <td><%= person.last_name %></td>
+      <td><%= person.location %></td>
+      <td><%= person.birthday %></td>
+    </tr>
+    <% @current_class = @current_class.blank? ? 'alt-row' : '' %>
+  <% end %>
 <% end %>
 </table>
  
