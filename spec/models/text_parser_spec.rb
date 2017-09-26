@@ -233,7 +233,7 @@ describe TextParser do
       let!(:date_object) {Date.today}
       let(:date_string) {""}
       ['/','-','.'].each do |separator|
-        ["%m#{separator}%d#{separator}%Y", "%m#{separator}%d#{separator}%Y"].each do |format|
+        ["%d#{separator}%m#{separator}%Y", "%d#{separator}%m#{separator}%Y"].each do |format|
           it "gets date for '#{format}'" do
             date_string = date_object.strftime(format)
             expect(TextParser.parse_birthday(date_string)).to eq(date_object)

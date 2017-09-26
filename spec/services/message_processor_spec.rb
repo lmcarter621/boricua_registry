@@ -46,7 +46,7 @@ describe MessageProcessor do
       )
 
       expect(result).to eq( 
-        " Usar: 'Busco [nombres] [apellidos] en [ciudad] nació[mm-dd-aaaa]' o" \
+        " Usar: 'Busco [nombres] [apellidos] en [ciudad] nació[dd-mm-aaaa]' o" \
         " 'Descubrir [nombres] [apellidos] en [ciudad]'")
     end
   end
