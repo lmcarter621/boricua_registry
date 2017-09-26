@@ -52,7 +52,6 @@ class MessageProcessor
   end
 
   def unknown_message_type
-    "Error en formato." \
     " Usar: 'Busco [nombres] [apellidos] en [ciudad] nació[mm-dd-aaaa]' o" \
     " 'Descubrir [nombres] [apellidos] en [ciudad]'"
   end

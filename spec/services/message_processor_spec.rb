@@ -46,7 +46,6 @@ describe MessageProcessor do
       )
 
       expect(result).to eq( 
-        "Error en formato." \
         " Usar: 'Busco [nombres] [apellidos] en [ciudad] nació[mm-dd-aaaa]' o" \
         " 'Descubrir [nombres] [apellidos] en [ciudad]'")
     end
