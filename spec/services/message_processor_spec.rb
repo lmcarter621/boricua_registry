@@ -46,8 +46,8 @@ describe MessageProcessor do
       )
 
       expect(result).to eq( 
-        " Usar: 'Busco [nombres] [apellidos] en [ciudad] nació[dd-mm-aaaa]' o" \
-        " 'Descubrir [nombres] [apellidos] en [ciudad]'")
+        "Use (Busco o Registrar) [nombres] [apellidos] en [ciudad] nació [dd-mm-aaaa]." \
+        " Vea el registro en http://www.boricuaregistry.info/found_people")
     end
   end
 end
