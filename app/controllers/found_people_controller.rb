@@ -5,7 +5,6 @@ class FoundPeopleController < ApplicationController
       last_name: params['last_name'],
       location: params['location'],
       birthday: params['birthday'],
-      status: params['status'],
     }
 
     @people = FoundPerson.all
@@ -13,6 +12,5 @@ class FoundPeopleController < ApplicationController
     @people = @people.where('last_name like ?', "#{params['last_name']}%") if params['last_name'].present?
     @people = @people.where('location like ?', "#{params['location']}") if params['location'].present?
     @people = @people.where('birthday = ?', params['birthday'].to_datetime) if params['birthday'].present?
-    @people = @people.where('status like ?', "#{params['status']}") if params['status'].present?
   end
 end

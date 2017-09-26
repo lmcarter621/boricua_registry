@@ -1,12 +1,12 @@
 require "rails_helper"
 
 describe MessageProcessor do
-  context "reporting person found" do
+  context "registering person found" do
     it "should process and return a supportive message" do
       expect(FoundPerson).to receive(:create!)
 
       result = MessageProcessor.process_message(
-        message: "Report Jane Doe in Uptown born 01-01-1990",
+        message: "register Jane Doe in Uptown born 01-01-1990",
         sender: "7875557777",
       )
 
@@ -46,8 +46,7 @@ describe MessageProcessor do
       )
 
       expect(result).to eq( 
-        "Error en formato." \
-        " Usar: 'Busco [nombres] [apellidos] en [ciudad] nació[mm-dd-aaaa]' o" \
+        " Usar: 'Busco [nombres] [apellidos] en [ciudad] nació[dd-mm-aaaa]' o" \
         " 'Descubrir [nombres] [apellidos] en [ciudad]'")
     end
   end

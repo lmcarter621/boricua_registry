@@ -136,7 +136,7 @@ class TextParser
   
   # Simple american date parsing just give it over to rails
   def self.parse_birthday(date_string)
-    date = Date.strptime(date_string.tr('-.','/'), "%m/%d/%Y") rescue nil
+    date = Date.strptime(date_string.tr('-.','/'), "%d/%m/%Y") rescue nil
     date ||= Date.parse(date_string) rescue nil
     date
   end
