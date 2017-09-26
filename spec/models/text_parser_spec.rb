@@ -5,7 +5,7 @@ describe TextParser do
     describe '.parse_message(text_message)' do
       let(:fake_hash) {{:something => :here}}
       context 'for reporting' do
-        let(:message) { "report this is just test data"}
+        let(:message) { "register this is just test data"}
         it 'should call parse_report' do
           allow(TextParser).to receive(:parse_report).and_return(fake_hash)
           expect(TextParser).to receive(:parse_report).once
@@ -35,7 +35,7 @@ describe TextParser do
       let(:date_string) {"01/01/1998"}
       context 'with valid text' do
         context 'with everything' do
-          let(:text_message) {"report Billy Bob Joe in City Name, Place born #{date_string} status Pretty Good 👍"}
+          let(:text_message) {"register Billy Bob Joe in City Name, Place born #{date_string} status Pretty Good 👍"}
           it "should return expected hash" do
             result = TextParser.parse_report(text_message, :en)
             expect(result[:first_name]).to eq("Billy")
@@ -46,7 +46,7 @@ describe TextParser do
           end
         end
         context 'without a birthday' do
-          let(:text_message) {"report Billy Bob Joe in City Name, Place status Pretty Good 👍"}
+          let(:text_message) {"register Billy Bob Joe in City Name, Place status Pretty Good 👍"}
           it "should return expected hash" do
             result = TextParser.parse_report(text_message, :en)
             expect(result[:first_name]).to eq("Billy")
@@ -57,7 +57,7 @@ describe TextParser do
           end
         end
         context 'without a status' do
-          let(:text_message) {"report Billy Bob Joe in City Name, Place born #{date_string}"}
+          let(:text_message) {"register Billy Bob Joe in City Name, Place born #{date_string}"}
           it "should return expected hash" do
             result = TextParser.parse_report(text_message, :en)
             expect(result[:first_name]).to eq("Billy")
@@ -68,7 +68,7 @@ describe TextParser do
           end
         end
         context 'without birthday or status' do
-          let(:text_message) {"report Billy Bob Joe in City Name, Place"}
+          let(:text_message) {"register Billy Bob Joe in City Name, Place"}
           it "should return expected hash" do
             result = TextParser.parse_report(text_message, :en)
             expect(result[:first_name]).to eq("Billy")
@@ -81,7 +81,7 @@ describe TextParser do
       end
       context 'with invalid text' do
         context 'with blank name' do
-          let(:text_message) {"report in City Name, Place born #{date_string} status Pretty Good 👍"}
+          let(:text_message) {"register in City Name, Place born #{date_string} status Pretty Good 👍"}
           it "first_name and last_name should be_blank" do
             result = TextParser.parse_report(text_message, :en)
             expect(result[:first_name]).to be_blank
@@ -89,7 +89,7 @@ describe TextParser do
           end
         end
         context 'with no location' do
-          let(:text_message) {"report Billy Bob Joe born #{date_string} status Pretty Good 👍"}
+          let(:text_message) {"register Billy Bob Joe born #{date_string} status Pretty Good 👍"}
           it "location should be_blank" do
             result = TextParser.parse_report(text_message, :en)
             expect(result[:location]).to be_blank

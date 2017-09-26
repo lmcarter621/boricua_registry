@@ -5,16 +5,16 @@ module TextParserCommands
     when :en
       'find'
     when :es
-      'descubrir'
+      'busco'
     end
   end
 
   def report(language)
     case language
     when :en
-      'report'
+      'register'
     when :es
-      'busco'
+      'registrar'
     end
   end
   
