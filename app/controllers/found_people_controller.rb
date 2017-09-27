@@ -8,9 +8,9 @@ class FoundPeopleController < ApplicationController
     }
 
     @people = person_object
-    @people = @people.where('first_name like ?', "#{params['first_name']}%") if params['first_name'].present?
-    @people = @people.where('last_name like ?', "#{params['last_name']}%") if params['last_name'].present?
-    @people = @people.where('location like ?', "#{params['location']}") if params['location'].present?
+    @people = @people.where('first_name ilike ?', "#{params['first_name']}%") if params['first_name'].present?
+    @people = @people.where('last_name ilike ?', "#{params['last_name']}%") if params['last_name'].present?
+    @people = @people.where('location ilike ?', "#{params['location']}") if params['location'].present?
     @people = @people.where('birthday = ?', params['birthday'].to_datetime) if params['birthday'].present?
   end
 
