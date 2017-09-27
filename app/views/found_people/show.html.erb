@@ -21,7 +21,7 @@
     <th>First Name</th>
     <th>Last Name</th>
     <th>Location</th>
-    <th>Birthday</th>
+    <th>Age</th>
   </tr>
 
 <% if @people.present? %>
@@ -30,7 +30,7 @@
       <td><%= person.first_name %></td>
       <td><%= person.last_name %></td>
       <td><%= person.location %></td>
-      <td><%= person.birthday %></td>
+      <td><%= person.age %></td>
     </tr>
     <% @current_class = @current_class.blank? ? 'alt-row' : '' %>
   <% end %>

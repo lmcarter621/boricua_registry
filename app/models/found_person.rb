@@ -17,4 +17,13 @@ class FoundPerson < ActiveRecord::Base
   def clean_phone_number
     phone_number&.gsub!(/[^\D]/, '')
   end
+
+  def age
+    today = DateTime.now
+    age = today.year - birthday.year
+
+    return age if today.month > birthday.month
+    return age-1 if birthday.month > today.month
+    return age if today.month == birthday.month && birthday.day <= today.day
+  end
 end
