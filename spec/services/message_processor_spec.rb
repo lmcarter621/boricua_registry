@@ -17,7 +17,7 @@ describe MessageProcessor do
   context "searching for a person" do
     it "should return a found person information if registered" do
       person = FoundPerson.create(person_hash.merge(reported_by_number: "7878887777"))
-      allow(FoundPerson).to receive(:where).and_return([person])
+      allow(FoundPerson).to receive(:filter_by).and_return([person])
 
       result = MessageProcessor.process_message(
         message: "Find Jane Doe in Uptown",
@@ -28,7 +28,7 @@ describe MessageProcessor do
     end
 
     it "should return a not found message if not registered" do
-      allow(FoundPerson).to receive(:where).and_return([])
+      allow(FoundPerson).to receive(:filter_by).and_return([])
 
       result = MessageProcessor.process_message(
         message: "Find Jane Doe in Uptown",
