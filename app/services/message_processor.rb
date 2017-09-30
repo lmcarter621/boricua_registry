@@ -65,6 +65,6 @@ class MessageProcessor
 
   def unknown_message_type
     "Use (Busco o Registrar) [nombres] [apellidos] en [ciudad] nació [dd-mm-aaaa]." \
-    "\nVea el registro en http://www.boricuaregistry.info/found_people"
+    "\n\nVea el registro en http://www.boricuaregistry.info/found_people"
   end
 end
