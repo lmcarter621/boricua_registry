@@ -9,6 +9,55 @@
   </head>
 
   <body>
-    <%= yield %>
+	<%= yield %>
+    <p>
+		<h1>🇵🇷 Instrucciónes</h1>
+		<h2>Registrar</h2>
+Enviar un mensaje a 787-339-2882:
+<br/>
+Registrar[nombres][apellidos] en [ciudad] nació [dd-mm-aaaa].
+<br/>
+o
+<br/>
+Registrar[nombres][apellidos] en [ciudad] nació [dd-mm-aaaa] contacto [###-###-####].
+
+		<h2>Buscando</h2>
+Enviar un mensaje a 787-339-2882:
+<br/>
+Busco [nombres][apellidos] en [ciudad] nació [dd-mm-aaaa].
+<br/>
+<!-- o
+<br/>
+Busco contacto [###-###-####]
+-->
+o
+<br/>
+Vea <%= link_to 'www.boricuaregistry.com/found_people', found_people_path %>
+    </p>
+	<p>
+		<h1>🇺🇸 Instructions</h1>
+		<h2>Register</h2>
+Text a message to 787-339-2882:
+<br/>
+report [First Name][Last Name] in [City] born [dd-mm-yyyy].
+<br/>
+or
+<br/>
+report [First Name][Last Name] in [City] born [dd-mm-yyyy] contact [###-###-####].
+
+		<h2>Search</h2>
+Text a message to 787-339-2882:
+<br/>
+find [First Name][Last Name] in [City] born [dd-mm-yyyy].
+<br/>
+<!--  or
+><br/>
+find contact [###-###-####]
+-->
+<br/>
+or
+<br/>
+Visit <%= link_to 'www.boricuaregistry.com/found_people', found_people_path %>
+	</p>
   </body>
 </html>
