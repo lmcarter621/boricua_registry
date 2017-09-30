@@ -24,7 +24,7 @@
     <th>Age</th>
   </tr>
 
-<% if @people.present? %>
+<% if @people.present? && @people.respond_to?(:each) %>
   <% @people.each do |person| %>
     <tr class="<%= @current_class %>">
       <td><%= person.first_name %></td>
@@ -34,6 +34,8 @@
     </tr>
     <% @current_class = @current_class.blank? ? 'alt-row' : '' %>
   <% end %>
+<% else %>
+  <tr><td>No hay resultados | No Results</td></tr>
 <% end %>
 </table>
  
