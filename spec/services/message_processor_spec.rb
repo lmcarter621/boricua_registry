@@ -37,6 +37,18 @@ describe MessageProcessor do
 
       expect(result).to eq("No podemos encontrarle.  Intentaló otra vez y tener fé.")
     end
+
+    it "should return an information message if any part of the required search is missing" do
+      result = MessageProcessor.process_message(
+        message: "Find Jane in Uptown",
+        sender: "7875557777",
+      )
+
+      expect(result).to eq(
+        "Use (Busco o Registrar) [nombres] [apellidos] en [ciudad] nació [dd-mm-aaaa]." \
+        " Vea el registro en http://www.boricuaregistry.info/found_people"
+      )
+    end
   end
   context "invalid text" do
     it "should not process and return a message with directions" do
@@ -47,7 +59,8 @@ describe MessageProcessor do
 
       expect(result).to eq( 
         "Use (Busco o Registrar) [nombres] [apellidos] en [ciudad] nació [dd-mm-aaaa]." \
-        " Vea el registro en http://www.boricuaregistry.info/found_people")
+        " Vea el registro en http://www.boricuaregistry.info/found_people"
+      )
     end
   end
 end

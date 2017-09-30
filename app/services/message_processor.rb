@@ -41,15 +41,26 @@ class MessageProcessor
   end
 
   def search_person
+    return unknown_message_type unless valid_search_criteria?
+
     #TODO  use where in place of findby to indicate the search must be narrowed
     # person = FoundPerson.where(message_parts.except!(:message_type)).first
-    person = FoundPerson.filter_by(message_parts.except!(:message_type)).first
+    search_criteria = message_parts.except!(:message_type).stringify_keys
+    person = FoundPerson.filter_by(search_criteria).first
 
     if person.present?
       "#{person.first_name} #{person.last_name} en #{person.location} ha sido encontrado."
     else
       "No podemos encontrarle.  Intentaló otra vez y tener fé."
     end
+  end
+
+  def valid_search_criteria?
+    return unless message_parts[:first_name].present?
+    return unless message_parts[:last_name].present?
+    return unless message_parts[:location].present?
+
+    true
   end
 
   def unknown_message_type
